@@ -4,9 +4,26 @@ The above is an extension to the Open Source Controller developed by TU-Delft (h
 
 
 
+The extension is able to inject faults to the following sensors: Rotor speed, Generator Speed, Azimuth angle, i-th pitch angle and i-th blade load sensor.
 
+Each fault can take the form of the following types: An additive fault, multiplicative fault, drift or constant value.
 
+The current implementation is sub-optimal, however, it sufficiently injects the desired faults into the control loop.
+Optimizations may be made down the line. A more efficient implementation could be written by abstracting the injection into a function, where structs containing a given fault's information could be passed to it.
 
+The two main components of the extension is the `FDI.f90` and the `FDI_Types.f90`. Where the former is responsible for reading the `FAULTS.in` file and injecting the faults based on the specified parameters.
+
+If the main DRC is updated, the fault injection extension can be integrated simply by adding the following two lines to the `DISCON.f90`:
+~~~~
+CALL ReadFaultParameterFile(FaultPar)
+CALL FaultInjection(LocalVar, FaultPar, FaultVar)
+~~~~
+Between the `SetParameters(...)` and `CALL StateMachine(...)` function calls.
+
+The Fault Injection Extension was created for use during my MSc thesis, due needing an IPC with fault injection capabilities to use with FAST.
+Thanks to S.P Mulders for the guidance regarding the modification, and also for the developing the main controller in the first place.
+
+Below is some information from the main DRC repository. Please remember to cite his paper if used for a publication.
 
 # Information from the ReadMe (from the orignal repository)
 
