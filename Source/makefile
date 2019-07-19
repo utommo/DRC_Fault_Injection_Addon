@@ -9,15 +9,15 @@
 # It was designed to be used with discon.f90 for the Bladed DLL Interface        #
 #================================================================================#
 
-   # 32-bit or 64-bit?
-BITS = 32
-#BITS = 64
-   # Location of source files for the DLL.
-   # You may need to change these for your DLL.
+# 32-bit or 64-bit?
+#BITS = 32
+BITS = 64
+# Location of source files for the DLL.
+# You may need to change these for your DLL.
 
 DLL_DIR     = .
 
-SOURCE_FILE = Constants.f90 DRC_Types.f90 Functions.f90 Filters.f90 ReadSetParameters.f90 Controllers.f90 DISCON.f90
+SOURCE_FILE = Constants.f90 DRC_Types.f90 Functions.f90 Filters.f90 ReadSetParameters.f90 Controllers.f90 FDI.f90 FDI_Types.f90 DISCON.f90
 
 
    # Name of compiler to use and flags to use.
@@ -33,7 +33,7 @@ LDFLAGS = -shared -O2 -m$(BITS) -fbacktrace
    # Destination and RootName for executable
 
 OUTPUT_NAME = DISCON
-DEST_DIR    = ../DISCON
+DEST_DIR    = ./DISCON
 
    #==========================================================#
    # You should not need to change anything beyond this point #
@@ -44,7 +44,7 @@ DEST_DIR    = ../DISCON
 ifeq ($(OS),Windows_NT)
       # Windows
    DEL_CMD   = del
-   EXE_EXT   = _gwin$(BITS).dll
+   EXE_EXT   = _x$(BITS).dll
    INTER_DIR = Obj_win$(BITS)
    MD_CMD    = @mkdir
    OBJ_EXT   = .obj

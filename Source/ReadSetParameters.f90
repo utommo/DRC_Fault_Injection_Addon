@@ -344,7 +344,7 @@ CONTAINS
 					 'https://github.com/TUDelft-DataDrivenControl              '
 			
 			CALL ReadControlParameterFileSub(CntrPar)
-			
+
 			! Initialize testValue (debugging variable)
 			LocalVar%TestType = 0
 

@@ -1,0 +1,75 @@
+! Configuration file for the fault settings, which is an add-on for the modified DRC_Fortran IPC controller (Delft Research Controller, by TU-Delft).
+1				! Enable     	-	Enable Faults    1: enable, 0: disable
+1				! FDI_Log		- 	Log Faults info  1: enable, 0: diasble
+1				! F_BL1Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+1       		! F_BL2Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+4		  		! F_BL3Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+1				! F_BP1Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+4       		! F_BP2Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+4		  		! F_BP3Type  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+1				! F_OGType  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+4       		! F_ORType  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+4		  		! F_AzType  	-   Type			 0:	No fault, 1: Additive, 2: Multiplicative, 3: Drift, 4: Constant 
+! Fault settings for the blade root bending moment sensors
+20		        ! F_BL1Stime 	-   Start time [s]	 - Blade Root Bending Moment Sensor 1 
+1500            ! F_BL1Etime 	-   End time   [s]	 
+5000000		    ! F_BL1Add   	-   Magnitude  [Nm]		
+0.95 		    ! F_BL1Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BL1Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BL1Cons 	-   Constant   [Nm] 	
+! ---------------------------------------------------------------------------------------
+20  	        ! F_BL2Stime 	-   Start time [s]	 - Blade Root Bending Moment Sensor 2 
+1500            ! F_BL2Etime 	-   End time   [s]	 
+5000000		    ! F_BL2Add   	-   Magnitude  [Nm]		
+1.05		    ! F_BL2Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BL2Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BL2Cons 	-   Constant   [Nm] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_BL3Stime 	-   Start time [s]	 - Blade Root Bending Moment Sensor 3
+1500            ! F_BL3Etime 	-   End time   [s]	 
+500000		    ! F_BL3Add   	-   Magnitude  [Nm]		
+1.05 		    ! F_BL3Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BL3Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BL3Cons 	-   Constant   [Nm] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_BP1Stime 	-   Start time [s]	 - Blade Pitch Sensor 1
+1500            ! F_BP1Etime 	-   End time   [s]	 
+1 			    ! F_BP1Add   	-   Magnitude  [deg]		
+1.05 		    ! F_BP1Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BP1Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BP1Cons 	-   Constant   [deg] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_BP2Stime 	-   Start time [s]	 - Blade Pitch Sensor 2
+1500            ! F_BP2Etime 	-   End time   [s]	 
+3			    ! F_BP2Add   	-   Magnitude  [deg]		
+10.15 		    ! F_BP2Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BP2Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BP2Cons 	-   Constant   [deg] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_BP3Stime 	-   Start time [s]	 - Blade Pitch Sensor 3
+1500            ! F_BP3Etime 	-   End time   [s]	 
+2   		    ! F_BP3Add   	-   Magnitude  [deg]		
+1.05 		    ! F_BP3Mul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_BP3Drift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_BP3Cons 	-   Constant   [deg] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_ORStime 	-   Start time [s]	 - Rotor speed sensor
+1500            ! F_OREtime 	-   End time   [s]	 
+2   		    ! F_ORAdd   	-   Magnitude  [rad/s]		
+1.05 		    ! F_ORMul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_ORDrift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_ORCons  	-   Constant   [rad/s] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_OGStime 	-   Start time [s]	 - Generator speed sensor
+1500            ! F_OGEtime 	-   End time   [s]	 
+50   		    ! F_OGAdd   	-   Magnitude  [rad/s]		
+1.05 		    ! F_OGMul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_OGDrift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_OGCons  	-   Constant   [rad/s] 	
+! ---------------------------------------------------------------------------------------
+20		        ! F_AzStime 	-   Start time [s]	 - Azimuth angle sensor
+1500            ! F_AzEtime 	-   End time   [s]	 
+2   		    ! F_AzAdd   	-   Magnitude  [deg]		
+1.05 		    ! F_AzMul   	-   Gain	   [%]		% -> 1.01 = 1%
+0               ! F_AzDrift 	-   Drift	   [%] 		% -> 0.01 = 1%
+0               ! F_AzCons  	-   Constant   [deg] 	

@@ -16,8 +16,8 @@ CONTAINS
 		INTEGER(4)						:: K			! Index used for looping through blades.
 		
 		TYPE(ControlParameters), INTENT(INOUT)	:: CntrPar
-		TYPE(LocalVariables), INTENT(INOUT)		:: LocalVar
-		TYPE(ObjectInstances), INTENT(INOUT)	:: objInst
+		TYPE(LocalVariables),    INTENT(INOUT)	:: LocalVar
+		TYPE(ObjectInstances),   INTENT(INOUT)	:: objInst
 	
 		!..............................................................................................................................
 		! Pitch control
@@ -75,10 +75,11 @@ CONTAINS
 		
 		! Command the pitch demanded from the last
 		! call to the controller (See Appendix A of Bladed User's Guide):
-		avrSWAP(42) = LocalVar%PitCom(1)		! Use the command angles of all blades if using individual pitch
-		avrSWAP(43) = LocalVar%PitCom(2)		! "
-		avrSWAP(44) = LocalVar%PitCom(3)		! "
-		avrSWAP(45) = LocalVar%PitCom(1)		! Use the command angle of blade 1 if using collective pitch
+			avrSWAP(42) = LocalVar%PitCom(1)		! Use the command angles of all blades if using individual pitch
+			avrSWAP(43) = LocalVar%PitCom(2)		! "
+			avrSWAP(44) = LocalVar%PitCom(3)		! "
+			avrSWAP(45) = LocalVar%PitCom(1)		! Use the command angle of blade 1 if using collective pitch
+
 	END SUBROUTINE PitchControl
 	
 	SUBROUTINE VariableSpeedControl(avrSWAP, CntrPar, LocalVar, objInst)
@@ -214,7 +215,7 @@ CONTAINS
             IntAxisTilt_2P = 0.0
 			IntAxisYaw_2P = 0.0
 		END IF
-	
+
 		! Pass rootMOOPs through the Coleman transform to get the tilt and yaw moment axis
 		CALL ColemanTransform(LocalVar%rootMOOP, LocalVar%Azimuth, NP_1, axisTilt_1P, axisYaw_1P)
         CALL ColemanTransform(LocalVar%rootMOOP, LocalVar%Azimuth, NP_2, axisTilt_2P, axisYaw_2P)

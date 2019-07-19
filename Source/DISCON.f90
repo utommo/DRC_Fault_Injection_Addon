@@ -11,6 +11,10 @@ USE				:: ReadSetParameters
 USE				:: Controllers
 USE             :: Constants
 
+! Thomas: Fault Diagnosis/Injection Add-on
+USE				:: FDI			!Thomas
+USE 			:: Fault_Types  !Thomas
+
 IMPLICIT NONE
 #ifndef IMPLICIT_DLLEXPORT
 !GCC$ ATTRIBUTES DLLEXPORT :: DISCON
@@ -36,12 +40,22 @@ TYPE(ControlParameters), SAVE			:: CntrPar
 TYPE(LocalVariables), SAVE				:: LocalVar
 TYPE(ObjectInstances), SAVE				:: objInst
 
+! Thomas: Fault Diagnosis/Injection Add-on
+TYPE(FaultParameters),SAVE				:: FaultPar							! Thomas: Setting up the FaultParameters in FaultPar
+TYPE(FaultVariables),SAVE				:: FaultVar							! Thomas: Setting up the FaultParameters in FaultPar
+
 !------------------------------------------------------------------------------------------------------------------------------
 ! Main control calculations
 !------------------------------------------------------------------------------------------------------------------------------
 ! Read avrSWAP array into derived types/variables
 CALL ReadAvrSWAP(avrSWAP, LocalVar)
 CALL SetParameters(avrSWAP, aviFAIL, ErrMsg, SIZE(avcMSG), CntrPar, LocalVar, objInst)
+
+! Thomas: Fault Diagnosis/Injection Add-on
+! Start
+CALL ReadFaultParameterFile(FaultPar)
+CALL FaultInjection(LocalVar, FaultPar, FaultVar)
+! End
 
 IF ((LocalVar%iStatus >= 0) .AND. (aviFAIL >= 0))  THEN  ! Only compute control calculations if no error has occurred and we are not on the last time step
 	CALL StateMachine(CntrPar, LocalVar)
@@ -51,6 +65,8 @@ IF ((LocalVar%iStatus >= 0) .AND. (aviFAIL >= 0))  THEN  ! Only compute control 
 	CALL YawRateControl(avrSWAP, CntrPar, LocalVar, objInst)
 
 	CALL Debug(LocalVar, CntrPar, avrSWAP, RootName, SIZE(avcOUTNAME))
+	!Thomas
+	CALL FDIDebug(LocalVar, CntrPar, FaultVar, FaultPar)
 END IF
 
 avcMSG = TRANSFER(TRIM(ErrMsg)//C_NULL_CHAR, avcMSG, SIZE(avcMSG))

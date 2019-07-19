@@ -226,44 +226,28 @@ CONTAINS
 		IF (LocalVar%iStatus == 0)  THEN  ! .TRUE. if we're on the first call to the DLL
 		! If we're debugging, open the debug file and write the header:
 			IF (CntrPar%LoggingLevel > 0) THEN
-				!OPEN(unit=UnDb, FILE=TRIM(RootName)//'.dbg', STATUS='NEW')
 				OPEN(unit=UnDb, FILE='DEBUG.dbg')
-				WRITE (UnDb,'(A)')	'   LocalVar%Time '  //Tab//'LocalVar%FA_Acc  '//Tab//'LocalVar%FA_AccHPF  '//Tab//'LocalVar%FA_AccHPFI  '//Tab//'LocalVar%PitCom  '
-				WRITE (UnDb,'(A)')	'   (sec) ' //Tab//'(m/s^2)    ' //Tab//'(m/s^2)    ' //Tab//'(m/s)    ' //Tab//'(rad)    '
-                !WRITE (UnDb,'(A)')	'   LocalVar%Time '  //Tab//'LocalVar%PC_PitComT  ' //Tab//'LocalVar%PC_SpdErr  ' //Tab//'LocalVar%PC_KP ' //Tab//'LocalVar%PC_KI  ' //Tab//'LocalVar%Y_M  ' //Tab//'LocalVar%rootMOOP(1)  '//Tab//'VS_RtPwr  '//Tab//'LocalVar%GenTq'
-				!WRITE (UnDb,'(A)')	'   (sec) ' //Tab//'(rad)    '  //Tab//'(rad/s) '//Tab//'(-) ' //Tab//'(-)   ' //Tab//'(rad)   ' //Tab//'(?)   ' //Tab//'(W)   '//Tab//'(Nm)  '
+				WRITE (UnDb,'(A)')	'Time'//Tab//'PtchC1'//Tab//'PtchC2'//Tab//'PtchC3'//Tab//'rootMOOP1'//Tab//'rootMOOP2'//Tab//'rootMOOP3'//Tab//'BlPitch1C'//Tab//'BlPitch2C'//Tab//'BlPitch3C'
+				!               	 Time (sec),  PtchC1 (rad),  PtchC2 (rad),  PtchC3 (rad),  rootMOOP1 (Nm),   rootMOOP2 (Nm),   rootMOOP3 (Nm),   BlPitch1C (deg)   BlPitch2C (deg),  BlPitch3C (deg)
 			END IF
 			
 			IF (CntrPar%LoggingLevel > 1) THEN
-				!OPEN(UnDb2, FILE=TRIM(RootName)//'.dbg2', STATUS='REPLACE')
-                OPEN(unit=UnDb, FILE='DEBUG2.dbg')
-				WRITE(UnDb2,'(/////)')
-				WRITE(UnDb2,'(A,85("'//Tab//'AvrSWAP(",I2,")"))')  'LocalVar%Time ', (i,i=1,85)
-				WRITE(UnDb2,'(A,85("'//Tab//'(-)"))')  '(s)'
+                OPEN(unit=UnDb2, FILE='DEBUG.dbg2')
+				WRITE (UnDb2,'(A)')	'Time'//Tab//'rootMOOP1'//Tab//'rootMOOP2'//Tab//'rootMOOP3'//Tab//'BlPitch1'//Tab//'BlPitch2'//Tab//'BlPitch3'
+				!					 Time (sec),  rootMOOP1 (Nm),   rootMOOP2 (Nm),   rootMOOP3 (Nm),  BlPitch1 (deg)  BlPitch2 (deg),    BlPitch3 (deg)
 			END IF
 		ELSE
-			! Print simulation status, every 10 seconds
-			IF (MODULO(LocalVar%Time, 10.0) == 0) THEN
-				WRITE(*, 100) LocalVar%GenSpeedF*RPS2RPM, LocalVar%BlPitch(1)*R2D, avrSWAP(15)/1000.0, LocalVar%WE_Vw ! LocalVar%Time !/1000.0
-				100 FORMAT('Generator speed: ', f6.1, ' RPM, Pitch angle: ', f5.1, ' deg, Power: ', f7.1, ' kW, Est. wind Speed: ', f5.1, ' m/s')
-				! PRINT *, LocalVar%PC_State, LocalVar%VS_State, CntrPar%VS_Rgn3Pitch, CntrPar%PC_FinePit, CntrPar%PC_Switch, LocalVar%BlPitch(1) ! Additional debug info
-                ! PRINT *, LocalVar%RotSpeed
-			END IF
-			
 			! Output debugging information if requested:
 			IF (CntrPar%LoggingLevel > 0) THEN
-				WRITE (UnDb,FmtDat)		LocalVar%Time, LocalVar%FA_Acc, LocalVar%FA_AccHPF, LocalVar%FA_AccHPFI, LocalVar%PitCom
+				! Thomas: Added a rootMOOP log output, removed unecessary stuff
+				WRITE (UnDb,FmtDat)		LocalVar%Time, LocalVar%PitCom, LocalVar%rootMOOP, avrSWAP(42:44)
 			END IF
 			
 			IF (CntrPar%LoggingLevel > 1) THEN
-				WRITE (UnDb2,FmtDat)	LocalVar%Time, avrSWAP(1:85)
+				WRITE (UnDb2,FmtDat)	LocalVar%Time, avrSWAP(30:32), avrSWAP(4), avrSWAP(33), avrSWAP(34)
 			END IF
 		END IF
-		
-		IF (MODULO(LocalVar%Time, 10.0) == 0.0) THEN
-			!LocalVar%TestType = LocalVar%TestType + 10
-			!PRINT *, LocalVar%TestType
-		END IF
+
 	END SUBROUTINE Debug
 	!-------------------------------------------------------------------------------------------------------------------------------
 	!The Coleman or d-q axis transformation transforms the root out of plane bending moments of each turbine blade
